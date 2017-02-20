@@ -16,7 +16,7 @@ namespace GoogleAnalyticsReportingAPIWrapper
         /// <param name="StartDate">string date format "yyyy-MM-dd"</param>
         /// <param name="EndDate">string date format "yyyy-MM-dd"</param>
         /// <param name="expressionOfMetric">metric. example: "ga:hits"</param>
-        /// <param name="nameOfDimension">dımension. example: ga:dimension1</param>
+        /// <param name="nameOfDimension">dimension. example: ga:dimension1</param>
         /// <param name="viewId">view ID. example: "ga:113466633"</param>
         /// <param name="jsonFile">Full Path of file</param>
         /// <param name="scopes">scopes for authentication</param>
@@ -37,18 +37,18 @@ namespace GoogleAnalyticsReportingAPIWrapper
                 listOfMetric.AddRange(expressionOfMetric.Select(exp => new Metric() { Expression = exp }));
             }
 
-            List<Dimension> listOfDımension = new List<Dimension>();
+            List<Dimension> listOfDimension = new List<Dimension>();
 
             if (nameOfDimension.Length > 0)
             {
-                listOfDımension.AddRange(expressionOfMetric.Select(exp => new Dimension() { Name = exp }));
+                listOfDimension.AddRange(expressionOfMetric.Select(exp => new Dimension() { Name = exp }));
             }
 
             ReportRequest reportRequest = new ReportRequest
             {
                 ViewId = viewId,
                 DateRanges = new List<DateRange>() { dateRange },
-                Dimensions =listOfDımension ,
+                Dimensions =listOfDimension ,
                 Metrics = listOfMetric,
             };
 
