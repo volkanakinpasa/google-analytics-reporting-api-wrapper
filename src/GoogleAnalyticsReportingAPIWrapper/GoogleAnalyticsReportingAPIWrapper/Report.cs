@@ -11,46 +11,47 @@ namespace GoogleAnalyticsReportingAPIWrapper
     public class Report
     {
         /// <summary>
-        /// 
+        /// Gets Google Analytics Reports by sending custom variables
         /// </summary>
-        /// <param name="StartDate">string date format "yyyy-MM-dd"</param>
-        /// <param name="EndDate">string date format "yyyy-MM-dd"</param>
-        /// <param name="expressionOfMetric">metric. example: "ga:hits"</param>
-        /// <param name="nameOfDimension">dimension. example: ga:dimension1</param>
-        /// <param name="viewId">view ID. example: "ga:113466633"</param>
+        /// <param name="startDate">report start date. format "yyyy-MM-dd"</param>
+        /// <param name="endDate">report start date. format "yyyy-MM-dd"</param>
+        /// <param name="metrics">metrics. example: "ga:hits, ga:eventValue etc."</param>
+        /// <param name="dimensions">dimensions. example: "ga:dimension1," for events "ga:eventCategory, ga:eventAction, ga:eventLabel"</param>
+        /// <param name="viewId">view id of your property. example: "ga:113466633"</param>
         /// <param name="jsonFile">Full Path of file</param>
         /// <param name="scopes">scopes for authentication</param>
         /// <param name="applicationName">Your application name</param>
         /// <returns></returns>
-        public GetReportsResponse Get(string StartDate, string EndDate, string[] expressionOfMetric, string[] nameOfDimension, string viewId, string jsonFile, string[] scopes, string applicationName)
+        public GetReportsResponse Get(string startDate, string endDate, string[] metrics, string[] dimensions,
+            string viewId, string jsonFile, string[] scopes, string applicationName)
         {
             DateRange dateRange = new DateRange()
-            {
-                StartDate = StartDate,
-                EndDate = EndDate
-            };
+                                  {
+                                      StartDate = startDate,
+                                      EndDate = endDate
+                                  };
 
             List<Metric> listOfMetric = new List<Metric>();
 
-            if (expressionOfMetric.Length > 0)
+            if (metrics.Length > 0)
             {
-                listOfMetric.AddRange(expressionOfMetric.Select(exp => new Metric() { Expression = exp }));
+                listOfMetric.AddRange(metrics.Select(exp => new Metric() {Expression = exp}));
             }
 
             List<Dimension> listOfDimension = new List<Dimension>();
 
-            if (nameOfDimension.Length > 0)
+            if (dimensions.Length > 0)
             {
-                listOfDimension.AddRange(expressionOfMetric.Select(exp => new Dimension() { Name = exp }));
+                listOfDimension.AddRange(metrics.Select(exp => new Dimension() {Name = exp}));
             }
 
             ReportRequest reportRequest = new ReportRequest
-            {
-                ViewId = viewId,
-                DateRanges = new List<DateRange>() { dateRange },
-                Dimensions =listOfDimension ,
-                Metrics = listOfMetric,
-            };
+                                          {
+                                              ViewId = viewId,
+                                              DateRanges = new List<DateRange>() {dateRange},
+                                              Dimensions = listOfDimension,
+                                              Metrics = listOfMetric,
+                                          };
 
             List<ReportRequest> requests = new List<ReportRequest> {reportRequest};
 
@@ -63,13 +64,14 @@ namespace GoogleAnalyticsReportingAPIWrapper
 
             credential = credential.CreateScoped(scopes);
 
-            GetReportsRequest getReport = new GetReportsRequest() { ReportRequests = requests };
+            GetReportsRequest getReport = new GetReportsRequest() {ReportRequests = requests};
 
-            AnalyticsReportingService analyticsreporting = new AnalyticsReportingService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = applicationName,
-            });
+            AnalyticsReportingService analyticsreporting =
+                new AnalyticsReportingService(new BaseClientService.Initializer()
+                                              {
+                                                  HttpClientInitializer = credential,
+                                                  ApplicationName = applicationName,
+                                              });
 
             GetReportsResponse response = analyticsreporting.Reports.BatchGet(getReport).Execute();
 
