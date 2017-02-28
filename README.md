@@ -4,7 +4,7 @@ It covers Google Analytics Reporting API v4 by sending custom variables
 
 ## Installation
 ####**Nuget**
-      waiting to be uploaded...
+      Install-Package GoogleAnalyticsReportingAPIWrapper
 
 ## Usage
 Javascript, send example data
