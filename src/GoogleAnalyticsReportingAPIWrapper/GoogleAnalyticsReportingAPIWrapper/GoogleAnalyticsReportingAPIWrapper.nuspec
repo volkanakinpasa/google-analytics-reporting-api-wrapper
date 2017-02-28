@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>GoogleAnalyticsReportingAPIWrapper</id>
+    <version>1.0.0</version>
+    <title>GoogleAnalyticsReportingAPIWrapper</title>
+    <authors>Volkan AKIN</authors>
+    <owners>volkanakinpasa</owners>
+    <projectUrl>https://github.com/volkanakinpasa/google-analytics-reporting-api-wrapper</projectUrl>
+	<requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>It covers Google Analytics Reporting API v4 by sending custom variables</description>
+    <copyright />
+    <tags>google-analytics, wrapper, reporter</tags>
+	<dependencies>
+	  <dependency id="Google.Apis" version="1.21.0"/>
+	  <dependency id="Google.Apis.AnalyticsReporting.v4" version="1.21.0.774"/>
+	  <dependency id="Google.Apis.Auth" version="1.21.0"/>
+	  <dependency id="Google.Apis.Core" version="1.21.0"/>
+	  <dependency id="Zlib.Portable.Signed" version="1.11.0"/>
+	</dependencies>
+  </metadata>
+</package>

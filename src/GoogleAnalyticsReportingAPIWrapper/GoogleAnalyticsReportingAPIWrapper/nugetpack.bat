@@ -1,0 +1,1 @@
+nuget pack GoogleAnalyticsReportingAPIWrapper.csproj -properties Configuration=Release
