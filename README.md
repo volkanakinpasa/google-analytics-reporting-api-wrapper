@@ -1,5 +1,7 @@
 # google-analytics-reporting-api-wrapper
 
+![](https://ci.appveyor.com/api/projects/status/4r4midm4t20hs7ja?svg=true)
+
 It covers Google Analytics Reporting API v4 by sending custom variables
 
 ## Installation
