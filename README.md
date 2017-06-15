@@ -5,8 +5,22 @@
 It covers Google Analytics Reporting API v4 by sending custom variables
 
 ## Installation
-####**Nuget**
+#### **Nuget**
       Install-Package GoogleAnalyticsReportingAPIWrapper
+#### **Google Analytics**
+1. Create a Service Account
+https://console.developers.google.com/projectselector/iam-admin/serviceaccounts
+Select Role: Project / Viewer
+Check: Furnish a new private key / JSON
+
+2. Attach this file with the (secret) private key to your project.
+
+3. Enable Google Analytics Reporting API 
+https://console.developers.google.com/apis/api/analyticsreporting.googleapis.com/overview
+
+4. The service account will have an email. Add that email to your Google Analytics users, preferably only on the specific view you're interested in. (Administration / View / User Management)
+Read more: https://support.google.com/analytics/answer/1009702?hl=en
+
 
 ## Usage
 Javascript, send example data
