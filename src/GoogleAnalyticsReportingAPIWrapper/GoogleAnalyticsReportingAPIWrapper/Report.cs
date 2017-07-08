@@ -42,7 +42,7 @@ namespace GoogleAnalyticsReportingAPIWrapper
 
             if (dimensions.Length > 0)
             {
-                listOfDimension.AddRange(metrics.Select(exp => new Dimension() {Name = exp}));
+                listOfDimension.AddRange(dimensions.Select(exp => new Dimension() {Name = exp}));
             }
 
             ReportRequest reportRequest = new ReportRequest
