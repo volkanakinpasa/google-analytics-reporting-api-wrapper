@@ -21,39 +21,43 @@ namespace GoogleAnalyticsReportingAPIWrapper
         /// <param name="jsonFile">Full Path of file</param>
         /// <param name="scopes">scopes for authentication</param>
         /// <param name="applicationName">Your application name</param>
+        /// <param name="pageToken"></param>
+        /// <param name="dimensionFilterClauses"></param>
         /// <returns></returns>
         public GetReportsResponse Get(string startDate, string endDate, string[] metrics, string[] dimensions,
-            string viewId, string jsonFile, string[] scopes, string applicationName)
+            string viewId, string jsonFile, string[] scopes, string applicationName, string pageToken = null, List<DimensionFilterClause> dimensionFilterClauses = null)
         {
             DateRange dateRange = new DateRange()
-                                  {
-                                      StartDate = startDate,
-                                      EndDate = endDate
-                                  };
+            {
+                StartDate = startDate,
+                EndDate = endDate
+            };
 
             List<Metric> listOfMetric = new List<Metric>();
 
             if (metrics.Length > 0)
             {
-                listOfMetric.AddRange(metrics.Select(exp => new Metric() {Expression = exp}));
+                listOfMetric.AddRange(metrics.Select(exp => new Metric() { Expression = exp }));
             }
 
             List<Dimension> listOfDimension = new List<Dimension>();
 
             if (dimensions.Length > 0)
             {
-                listOfDimension.AddRange(dimensions.Select(exp => new Dimension() {Name = exp}));
+                listOfDimension.AddRange(dimensions.Select(exp => new Dimension() { Name = exp }));
             }
 
             ReportRequest reportRequest = new ReportRequest
-                                          {
-                                              ViewId = viewId,
-                                              DateRanges = new List<DateRange>() {dateRange},
-                                              Dimensions = listOfDimension,
-                                              Metrics = listOfMetric,
-                                          };
+            {
+                ViewId = viewId,
+                DateRanges = new List<DateRange>() { dateRange },
+                Dimensions = listOfDimension,
+                Metrics = listOfMetric,
+                PageToken = pageToken,
+                DimensionFilterClauses = dimensionFilterClauses
+            };
 
-            List<ReportRequest> requests = new List<ReportRequest> {reportRequest};
+            List<ReportRequest> requests = new List<ReportRequest> { reportRequest };
 
             GoogleCredential credential;
 
@@ -64,14 +68,14 @@ namespace GoogleAnalyticsReportingAPIWrapper
 
             credential = credential.CreateScoped(scopes);
 
-            GetReportsRequest getReport = new GetReportsRequest() {ReportRequests = requests};
+            GetReportsRequest getReport = new GetReportsRequest() { ReportRequests = requests };
 
             AnalyticsReportingService analyticsreporting =
                 new AnalyticsReportingService(new BaseClientService.Initializer()
-                                              {
-                                                  HttpClientInitializer = credential,
-                                                  ApplicationName = applicationName,
-                                              });
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = applicationName,
+                });
 
             GetReportsResponse response = analyticsreporting.Reports.BatchGet(getReport).Execute();
 
